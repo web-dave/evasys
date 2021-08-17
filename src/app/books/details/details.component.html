@@ -1,1 +1,14 @@
-<pre>{{ book | json }}</pre>
+<!-- <pre>{{ book | json }}</pre>
+<pre>{{ book$ | async | json }}</pre> -->
+
+<div class="panel panel-default" *ngIf="book$ | async as book">
+  <div class="panel-heading">{{ book.title }} ({{ book.isbn }})</div>
+  <div class="panel-body">
+    <p>
+      {{ book.abstract }}
+      <span class="badge bg-info">Seitenzahl: {{ book.numPages }}</span>
+    </p>
+    <p>{{ book.publisher }}</p>
+  </div>
+  <div class="panel-footer">{{ book.author }}</div>
+</div>

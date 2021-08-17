@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { IBook } from '../book.interface';
 import { BookService } from '../book.service';
 
@@ -9,15 +10,22 @@ import { BookService } from '../book.service';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
-  books: IBook[] = [];
+  books$!: Observable<IBook[]>;
+  search = '';
   constructor(
     private bookService: BookService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
+  findBook(event: Event) {
+    console.log((event.target as HTMLInputElement).value);
+
+    this.search = (event.target as HTMLInputElement).value;
+  }
+
   ngOnInit(): void {
-    this.bookService.getBooks().subscribe((data) => (this.books = data));
+    this.books$ = this.bookService.getBooks(); //.subscribe((data) => (this.books = data));
   }
 
   goTopBookDetails(data: IBook) {

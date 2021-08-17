@@ -1,7 +1,8 @@
 <h3>My Books</h3>
 <ul class="list-group">
+  <input type="text" (input)="findBook($event)" />
   <app-preview
-    *ngFor="let b of books"
+    *ngFor="let b of books$ | async | filter: search"
     [book]="b"
     (bookSeleted)="goTopBookDetails($event)"
   ></app-preview>

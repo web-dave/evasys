@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { IBook } from '../book.interface';
 import { BookService } from '../book.service';
 
@@ -11,25 +12,27 @@ import { BookService } from '../book.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   book!: IBook;
-  sub = new Subscription();
+  book$!: Observable<IBook>;
+  end$ = new EventEmitter<number>();
   constructor(private route: ActivatedRoute, private service: BookService) {}
 
   ngOnInit(): void {
     console.log(this.route);
-
+    this.book$ = this.service.getBook(this.route.snapshot.params.isbn);
     // this.route.params.subscribe((params) => {
     // this.service.getBook(params.isbn).subscribe((data) => (this.book = data));
     // });
-    this.sub = this.service
-      .getBook(this.route.snapshot.params.isbn)
-      .subscribe((data) => {
-        console.log(data);
+    // this.service
+    //   .getBook(this.route.snapshot.params.isbn)
+    //   .pipe(takeUntil(this.end$))
+    //   .subscribe((data) => {
+    //     console.log(data);
 
-        this.book = data;
-      });
+    //     this.book = data;
+    //   });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.end$.emit(1);
   }
 }
