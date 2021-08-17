@@ -1,5 +1,6 @@
 <h3>My Books</h3>
 <ul class="list-group">
+  <button class="btn btn-danger" routerLink="new">+</button>
   <input type="text" (input)="findBook($event)" />
   <app-preview
     *ngFor="let b of books$ | async | filter: search"

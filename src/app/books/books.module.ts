@@ -8,10 +8,18 @@ import { PreviewComponent } from './preview/preview.component';
 import { DetailsComponent } from './details/details.component';
 import { FilterPipe } from './filter.pipe';
 import { BookNewComponent } from './book-new/book-new.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [BooksComponent, BookListComponent, PreviewComponent, DetailsComponent, FilterPipe, BookNewComponent],
+  declarations: [
+    BooksComponent,
+    BookListComponent,
+    PreviewComponent,
+    DetailsComponent,
+    FilterPipe,
+    BookNewComponent,
+  ],
   exports: [BooksComponent],
-  imports: [CommonModule, BooksRoutingModule],
+  imports: [CommonModule, BooksRoutingModule, ReactiveFormsModule],
 })
 export class BooksModule {}
