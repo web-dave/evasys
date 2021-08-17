@@ -1,8 +1,9 @@
 <h3>My Books</h3>
 <ul class="list-group">
-  <li class="list-group-item">An item</li>
-  <li class="list-group-item">A second item</li>
-  <li class="list-group-item">A third item</li>
-  <li class="list-group-item">A fourth item</li>
-  <li class="list-group-item">And a fifth one</li>
+  <app-preview
+    *ngFor="let b of books"
+    [book]="b"
+    (bookSeleted)="goTopBookDetails($event)"
+  ></app-preview>
+  <!-- <li class="list-group-item" *ngFor="let book of books">{{ book.title }}</li> -->
 </ul>
