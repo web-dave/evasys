@@ -6,6 +6,10 @@ import { IBook } from './book.interface';
 })
 export class FilterPipe implements PipeTransform {
   transform(value: IBook[] | null = [], searchStr: string = ''): IBook[] {
-    return value?.filter((val) => val.title.includes(searchStr)) || [];
+    return (
+      value?.filter((val) =>
+        val.title.toLowerCase().includes(searchStr.toLowerCase())
+      ) || []
+    );
   }
 }

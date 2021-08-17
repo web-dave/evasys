@@ -5,7 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IBook } from '../book.interface';
+import { BookService } from '../book.service';
 
 @Component({
   selector: 'app-book-new',
@@ -13,6 +15,7 @@ import { IBook } from '../book.interface';
   styleUrls: ['./book-new.component.scss'],
 })
 export class BookNewComponent implements OnInit {
+  saved = false;
   form: FormGroup = new FormGroup({});
   fields = [
     'title',
@@ -25,6 +28,12 @@ export class BookNewComponent implements OnInit {
     'price',
     'cover',
   ];
+
+  constructor(
+    private service: BookService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fields.forEach((field) => {
@@ -50,5 +59,14 @@ export class BookNewComponent implements OnInit {
     //   price: ['', []],
     //   cover: ['', []],
     // });
+  }
+
+  saveBook() {
+    this.service.createBook(this.form.value).subscribe((data) => {
+      this.router.navigate(['..', data.isbn], { relativeTo: this.route });
+    });
+  }
+  isSaved() {
+    return this.saved || this.form.pristine;
   }
 }

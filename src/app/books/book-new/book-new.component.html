@@ -1,4 +1,4 @@
-<form [formGroup]="form" *ngIf="form">
+<form [formGroup]="form" (ngSubmit)="saveBook()">
   <div class="form-group" *ngFor="let field of fields">
     <label [for]="field">{{ field | uppercase }}</label>
     <input type="text" [id]="field" [formControlName]="field" />
