@@ -1,23 +1,11 @@
 <form [formGroup]="form" *ngIf="form">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" id="title" formControlName="title" />
-    <div [hidden]="!form.get('title')?.hasError('required')">Enter a title</div>
-  </div>
-  <div class="form-group">
-    <label for="isbn">ISBN</label>
-    <input type="text" id="isbn" formControlName="isbn" />
-  </div>
-  <!-- <fieldset formGroupName="publisher">
-    <div class="form-group">
-      <label>Name:</label>
-      <input type="text" formControlName="name" />
+  <div class="form-group" *ngFor="let field of fields">
+    <label [for]="field">{{ field | uppercase }}</label>
+    <input type="text" [id]="field" [formControlName]="field" />
+    <div [hidden]="!form.get(field)?.hasError('required')">
+      Enter a {{ field }}
     </div>
-    <div class="form-group">
-      <label>Url:</label>
-      <input type="text" formControlName="url" />
-    </div>
-  </fieldset> -->
+  </div>
 
   <div [hidden]="!form.get('isbn')?.hasError('minlength')">
     Not a valid ISBN

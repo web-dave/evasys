@@ -14,22 +14,20 @@ import { IBook } from '../book.interface';
 })
 export class BookNewComponent implements OnInit {
   form: FormGroup = new FormGroup({});
-  constructor(private formBuilder: FormBuilder) {}
+  fields = [
+    'title',
+    'subtitle',
+    'isbn',
+    'abstract',
+    'numPages',
+    'author',
+    'publisher',
+    'price',
+    'cover',
+  ];
 
   ngOnInit(): void {
-    const fields = [
-      'title',
-      'subtitle',
-      'isbn',
-      'abstract',
-      'numPages',
-      'author',
-      'publisher',
-      'price',
-      'cover',
-    ];
-
-    fields.forEach((field) => {
+    this.fields.forEach((field) => {
       const value = field === 'numPages' ? 0 : '';
       this.form.addControl(field, new FormControl(value));
     });
