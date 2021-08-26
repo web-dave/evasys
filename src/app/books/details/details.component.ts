@@ -16,13 +16,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
   book!: IBook;
   book$!: Observable<IBook>;
   end$ = new EventEmitter<number>();
-  constructor(private route: ActivatedRoute, private service: BookService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private service: BookService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     console.log(this.route);
-    // this.book$ = this.store
-    //   .select(getBook(this.route.snapshot.params.isbn))
-    //   .pipe(filter((book) => !!book));
+    this.book$ = this.store
+      .select(getBook(this.route.snapshot.params.isbn))
+      .pipe(filter((book): book is IBook => !!book));
     this.book$ = this.service.getBook(this.route.snapshot.params.isbn);
     // this.route.params.subscribe((params) => {
     // this.service.getBook(params.isbn).subscribe((data) => (this.book = data));
