@@ -1,4 +1,9 @@
-import { BookActions, LoadBooks, LOAD_BOOKS } from './book.actions';
+import {
+  BookActions,
+  LoadBooks,
+  LOAD_BOOKS,
+  SAVE_NEW_BOOK,
+} from './book.actions';
 import { IBookState, initialBookState } from './book.store';
 
 export function bookReducer(
@@ -11,6 +16,11 @@ export function bookReducer(
         ...state,
         books: (action as LoadBooks).books,
       };
+    //     case SAVE_NEW_BOOK:
+    //         return {
+    // ...state,
+    // books: [...state.books, action.book]
+    //         }
 
     default:
       return state;

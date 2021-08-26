@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { bookFeatureName } from './store/book.store';
 import { bookReducer } from './store/book.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { BookEffect } from './store/book.effect';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { bookReducer } from './store/book.reducer';
     BooksRoutingModule,
     ReactiveFormsModule,
     StoreModule.forFeature(bookFeatureName, bookReducer),
+    EffectsModule.forFeature([BookEffect]),
   ],
 })
 export class BooksModule {}
