@@ -8,4 +8,6 @@ export interface IBook {
   publisher: string;
   price: string;
   cover: string;
+  id?: string;
+  userId?: number;
 }

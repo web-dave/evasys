@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IBook } from '../book.interface';
-import { BookService } from '../book.service';
+import { getBooks } from '../store/book.selectors';
+import { bookFeatureName, IBookState } from '../store/book.store';
 
 @Component({
   selector: 'app-book-list',
@@ -13,7 +15,7 @@ export class BookListComponent implements OnInit {
   books$!: Observable<IBook[]>;
   search = '';
   constructor(
-    private bookService: BookService,
+    private store: Store<{ [bookFeatureName]: IBookState }>,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -25,7 +27,8 @@ export class BookListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.books$ = this.bookService.getBooks(); //.subscribe((data) => (this.books = data));
+    this.books$ = this.store.select(getBooks);
+    // this.books$ = this.bookService.getBooks(); //.subscribe((data) => (this.books = data));
   }
 
   goTopBookDetails(data: IBook) {

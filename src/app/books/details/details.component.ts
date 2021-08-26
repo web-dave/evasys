@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { IBook } from '../book.interface';
 import { BookService } from '../book.service';
+import { getBook } from '../store/book.selectors';
 
 @Component({
   selector: 'app-details',
@@ -18,6 +20,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log(this.route);
+    // this.book$ = this.store
+    //   .select(getBook(this.route.snapshot.params.isbn))
+    //   .pipe(filter((book) => !!book));
     this.book$ = this.service.getBook(this.route.snapshot.params.isbn);
     // this.route.params.subscribe((params) => {
     // this.service.getBook(params.isbn).subscribe((data) => (this.book = data));
