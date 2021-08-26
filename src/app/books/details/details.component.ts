@@ -5,7 +5,11 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { IBook } from '../book.interface';
 import { BookService } from '../book.service';
-import { getBook } from '../store/book.selectors';
+import {
+  bookSelector,
+  getBook,
+  selectRouteParam,
+} from '../store/book.selectors';
 
 @Component({
   selector: 'app-details',
@@ -16,6 +20,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   book!: IBook;
   book$!: Observable<IBook>;
   end$ = new EventEmitter<number>();
+
   constructor(
     private route: ActivatedRoute,
     private service: BookService,
@@ -25,8 +30,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.route);
     this.book$ = this.store
-      .select(getBook(this.route.snapshot.params.isbn))
+      .select(bookSelector)
       .pipe(filter((book): book is IBook => !!book));
+    // this.book$ = this.store
+    //   .select(getBook(this.route.snapshot.params.isbn))
+    //   .pipe(filter((book): book is IBook => !!book));
+
     this.book$ = this.service.getBook(this.route.snapshot.params.isbn);
     // this.route.params.subscribe((params) => {
     // this.service.getBook(params.isbn).subscribe((data) => (this.book = data));
